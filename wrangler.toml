@@ -1,6 +1,6 @@
-name = "cf-workers-bpsub"
+name = "Vless-snippets"
 main = "_worker.js"
-compatibility_date = "2024-01-01"
+compatibility_date = "2025-11-23"
 keep_vars = true
 
 [vars]

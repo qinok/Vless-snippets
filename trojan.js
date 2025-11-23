@@ -3,7 +3,7 @@ import { connect } from 'cloudflare:sockets';
 
 let subPath = 'link';     // 节点订阅路径,不修改将使用/sub/${UUID}作为订阅路径
 let proxyIP = '13.230.34.30';  // proxyIP
-let yourUUID = '5dc15e15-f285-4a9d-959b-0e4fbdd77b63'; // UUID
+let yourUUID = '90b9e496-e707-4fb2-9366-0f39a02135f3'; // UUID
 
 let cfip = [
 '108.162.198.29:443#CF亚太1J',

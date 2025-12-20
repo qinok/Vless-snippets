@@ -514,6 +514,7 @@ export default {
             const url = new URL(request.url);
             const pathname = url.pathname;
             let pathProxyIP = null;
+            let iparr = getIpUrlTxtToArry(ipurl) || cfip;
             if (pathname.startsWith('/proxyip=')) {
                 try {
                     pathProxyIP = decodeURIComponent(pathname.substring(9)).trim();
@@ -570,7 +571,7 @@ export default {
                 if (url.pathname.toLowerCase() === `/sub/${subPath.toLowerCase()}` || url.pathname.toLowerCase() === `/sub/${subPath.toLowerCase()}/`) {
                     const currentDomain = url.hostname;
                     const ssHeader = 's'+'s';
-                    const ssLinks = cfip.map(cdnItem => {
+                    const ssLinks = iparr.map(cdnItem => {
                         let host, port = 443, nodeName = '';
                         if (cdnItem.includes('#')) {
                             const parts = cdnItem.split('#');

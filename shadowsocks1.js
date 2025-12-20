@@ -1,7 +1,6 @@
-// 如需要使用环境变量,将462至468行取消注释
 import { connect } from 'cloudflare:sockets';
 
-let subPath = 'link';     // 节点订阅路径,不修改将使用UUID作为订阅路径
+let subPath = 'link';     
 let proxyIP = '210.61.97.241:81';  
 let password = '5dc15e15-f285-4a9d-959b-0e4fbdd77b63';  // 节点UUID
 let SSpath = '';          

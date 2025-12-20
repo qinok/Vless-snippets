@@ -12,6 +12,43 @@ let cfip = [ // 格式:优选域名:端口#备注名称、优选IP:端口#备注
     'cf.090227.xyz#SG', 'cf.877774.xyz#HK','cdns.doon.eu.org#JP','sub.danfeng.eu.org#TW','cf.zhetengsha.eu.org#HK'
 ];  // 感谢各位大佬维护的优选域名
 
+async function getIpUrlTxtToArry(urlTxts) {
+    if (!urlTxts || urlTxts.length === 0) {
+        return [];
+    }
+    let ipTxt = "";
+    const controller = new AbortController();
+
+    const timeout = setTimeout(() => {
+        controller.abort();
+    }, 2000);
+
+    try {
+        const responses = await Promise.allSettled(urlTxts.map(apiUrl => fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;',
+                'User-Agent': projectName
+            },
+            signal: controller.signal
+        }).then(response => response.ok ? response.text() : Promise.reject())));
+        for (const response of responses) {
+            if (response.status === 'fulfilled') {
+                const content = await response.value;
+                ipTxt += content + '\n';
+            }
+        }
+    } catch (error) {
+        errorLogs(error);
+    } finally {
+        clearTimeout(timeout);
+    }
+
+    const newIpTxt = await addIpText(ipTxt);
+    log(`urlTxts: ${urlTxts} \n ipTxt: ${ipTxt} \n newIpTxt: ${newIpTxt} `);
+    return newIpTxt;
+}
+
 function closeSocketQuietly(socket) {
     try { 
         if (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CLOSING) {

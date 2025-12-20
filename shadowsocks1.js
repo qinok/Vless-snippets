@@ -7,7 +7,6 @@ let password = '5dc15e15-f285-4a9d-959b-0e4fbdd77b63';  // 节点UUID
 let SSpath = '';          
 let ipurl = 'https://raw.githubusercontent.com/qinok/mydz/refs/heads/main/dz.txt';
 let cfip = ['mfa.gov.ua#SG', 'saas.sin.fan#JP'];  
-let cfip = getIpUrlTxtToArry(ipurl) || cfip;
 
 async function getIpUrlTxtToArry(urlTxts) {
     if (!urlTxts || urlTxts.length === 0) {

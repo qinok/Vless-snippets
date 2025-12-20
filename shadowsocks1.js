@@ -8,6 +8,19 @@ let SSpath = '';
 let ipurl = 'https://raw.githubusercontent.com/qinok/mydz/refs/heads/main/dz.txt';
 let cfip = ['mfa.gov.ua#SG', 'saas.sin.fan#JP'];  
 
+async function addIpText(envAdd) {
+    var addText = envAdd.replace(/[	|"'\r\n]+/g, ',').replace(/,+/g, ',');
+    //log(addText);
+    if (addText.charAt(0) == ',') {
+        addText = addText.slice(1);
+    }
+    if (addText.charAt(addText.length - 1) == ',') {
+        addText = addText.slice(0, addText.length - 1);
+    }
+    const add = addText.split(',');
+    // log(add);
+    return add;
+}
 async function getIpUrlTxtToArry(urlTxts) {
     if (!urlTxts || urlTxts.length === 0) {
         return [];

@@ -10,7 +10,7 @@ const ip_url = 'https://raw.githubusercontent.com/qinok/mydz/refs/heads/main/dz.
 let cfip = [ // 格式:优选域名:端口#备注名称、优选IP:端口#备注名称、[ipv6优选]:端口#备注名称、优选域名#备注 
 '108.162.198.29:443#CF亚太1J',
 '172.64.229.16:443#CF亚太2J'
-];  //462--467行替换了该数组
+];  //532--537行替换了该数组
 
 function closeSocketQuietly(socket) {
     try { 
@@ -457,14 +457,8 @@ function getSimplePage(request) {
 }
 
 export default {
-    async fetch(request,env) {
+    async fetch(request,env) { 
         try {
-            const response = await fetch(ip_url);
-            const text = await response.text();
-            var 替换后的内容 = text.replace(/[	|"'\r\n]+/g, ',').replace(/,+/g, ',');
-            if (替换后的内容.charAt(0) == ',') 替换后的内容 = 替换后的内容.slice(1);
-            if (替换后的内容.charAt(替换后的内容.length - 1) == ',') 替换后的内容 = 替换后的内容.slice(0, 替换后的内容.length - 1);
-            cfip = 替换后的内容.split(',');
             // if (env.PROXYIP || env.proxyip || env.proxyIP) {
             //     const servers = (env.PROXYIP || env.proxyip || env.proxyIP).split(',').map(s => s.trim());
             //     //proxyIP = servers[0]; 
@@ -535,6 +529,12 @@ export default {
                 }
                 // sub path /sub/UUID
                 if (url.pathname.toLowerCase() === `/sub/${subPath.toLowerCase()}` || url.pathname.toLowerCase() === `/sub/${subPath.toLowerCase()}/`) {
+                    const response = await fetch(ip_url);
+                    const text = await response.text();
+                    var 替换后的内容 = text.replace(/[	|"'\r\n]+/g, ',').replace(/,+/g, ',');
+                    if (替换后的内容.charAt(0) == ',') 替换后的内容 = 替换后的内容.slice(1);
+                    if (替换后的内容.charAt(替换后的内容.length - 1) == ',') 替换后的内容 = 替换后的内容.slice(0, 替换后的内容.length - 1);
+                    cfip = 替换后的内容.split(',');
                     const currentDomain = url.hostname;
                     const ssHeader = 's'+'s';
                     const ssLinks = cfip.map(cdnItem => {

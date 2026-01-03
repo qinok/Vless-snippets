@@ -1,24 +1,16 @@
-// 如需要使用环境变量,将462至468行取消注释
 import { connect } from 'cloudflare:sockets';
 
 let subPath = 'link';     // 节点订阅路径,不修改将使用UUID作为订阅路径
 let proxyIP = '210.61.97.241:81';  // proxyIP 格式：ip、域名、ip:port、域名:port等,没填写port，默认使用443
 let password = '90b9e496-e707-4fb2-9366-0f39a02135f3';  // 节点UUID
 let SSpath = '';          // 路径验证，为空则使用UUID作为验证路径
+const ip_url = 'https://raw.githubusercontent.com/qinok/mydz/refs/heads/main/dz.txt';
 
 // CF-CDN 
 let cfip = [ // 格式:优选域名:端口#备注名称、优选IP:端口#备注名称、[ipv6优选]:端口#备注名称、优选域名#备注 
 '108.162.198.29:443#CF亚太1J',
-'172.64.229.16:443#CF亚太2J',
-'172.64.146.178:443#CF亚太3S',
-'104.18.47.108:443#CF亚太4S',
-'saas.sin.fan:443#saas.sin.fan J',
-'www.shopify.com:443#shopify S',
-'store.ubi.com:443#store.ubi.com S',
-'cf.tencentapp.cn:443#cf.tencentapp.cn S',
-'202.85.53.77:7000#香港 YD',
-'115.91.165.115:50000#韩国'
-];  // 感谢各位大佬维护的优选域名
+'172.64.229.16:443#CF亚太2J'
+];  //462--467行替换了该数组
 
 function closeSocketQuietly(socket) {
     try { 
@@ -467,6 +459,12 @@ function getSimplePage(request) {
 export default {
     async fetch(request,env) {
         try {
+            const response = await fetch(ip_url);
+            const text = await response.text();
+            var 替换后的内容 = text.replace(/[	|"'\r\n]+/g, ',').replace(/,+/g, ',');
+            if (替换后的内容.charAt(0) == ',') 替换后的内容 = 替换后的内容.slice(1);
+            if (替换后的内容.charAt(替换后的内容.length - 1) == ',') 替换后的内容 = 替换后的内容.slice(0, 替换后的内容.length - 1);
+            cfip = 替换后的内容.split(',');
             // if (env.PROXYIP || env.proxyip || env.proxyIP) {
             //     const servers = (env.PROXYIP || env.proxyip || env.proxyIP).split(',').map(s => s.trim());
             //     //proxyIP = servers[0]; 
